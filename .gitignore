@@ -2,6 +2,7 @@
 # Our own ignores
 #
 memberarea/configuration.py
+static
 
 #
 ## https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
