@@ -10,7 +10,7 @@ from memberarea.apps.authentication.models import User
 class Command(BaseCommand):
     help = 'Import users from S-Verein export. File musst be UTF8.'
 
-    date_format = '%d.%m.%Y'
+    date_format: str = '%d.%m.%Y'
 
     def add_arguments(self, parser):
         parser.add_argument('file', nargs='+', type=argparse.FileType())

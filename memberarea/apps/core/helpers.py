@@ -1,5 +1,6 @@
 from rest_framework.exceptions import NotFound
 
+
 def object_or_not_found(tofind, pk):
     try:
         result = tofind.objects.get(pk=pk)

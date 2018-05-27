@@ -13,7 +13,8 @@ class WorkedHoursStats(TimestampedModel):
     hoursNotConfirmed = models.DecimalField(max_digits=7, decimal_places=2)
 
     def __str__(self):
-        return "{} has {} confirmed and {} not confirmed hours".format(self.user.display_name, self.hoursConfirmed, self.hoursNotConfirmed)
+        return "{} has {} confirmed and {} not confirmed hours".format(self.user.display_name, self.hoursConfirmed,
+                                                                       self.hoursNotConfirmed)
 
     class Meta:
         ordering = ('user', '-year')

@@ -22,7 +22,6 @@ class Workitem(TimestampedModel):
         settings.AUTH_USER_MODEL,
         through='WorkitemAssignment',
         through_fields=('workitem', 'assignee')
-
     )
     max_assignees = models.IntegerField()
     tags = models.ManyToManyField(Tag)

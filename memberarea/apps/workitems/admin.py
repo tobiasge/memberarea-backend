@@ -10,6 +10,7 @@ class RequiredHoursAdmin(admin.ModelAdmin):
     list_display = ('year', 'hours', 'missingHoursPrice', 'fromYearOfBirth', 'toYearOfBirth')
     form = RequiredHoursAdminForm
 
+
 @admin.register(Workitem)
 class WorkitemAdmin(admin.ModelAdmin):
     list_display = ('title', 'published', 'duration_expected', 'due_at', 'max_assignees')
@@ -30,6 +31,7 @@ class WorkitemAdmin(admin.ModelAdmin):
         data['created_by'] = request.user
         request.GET = data
         return super(WorkitemAdmin, self).add_view(request, form_url="", extra_context=extra_context)
+
 
 @admin.register(WorkedHoursStats)
 class WorkedHoursStatsAdmin(admin.ModelAdmin):

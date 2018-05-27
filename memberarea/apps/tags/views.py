@@ -33,6 +33,7 @@ class TagsAPIView(generics.ListAPIView):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
 class TagAPIView(APIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = TagSerializer
@@ -51,7 +52,6 @@ class TagAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
-      
 
     def delete(self, request, pk):
         tag = object_or_not_found(Tag, pk)
