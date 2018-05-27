@@ -25,6 +25,7 @@ class Workitem(TimestampedModel):
     )
     max_assignees = models.IntegerField()
     tags = models.ManyToManyField(Tag)
+    done = models.BooleanField(default=False)
 
     def assignee_add(self, assignee: User):
         if assignee is None:
@@ -110,8 +111,13 @@ class WorkitemAssignment(TimestampedModel):
         self.done = True
         self.done_at = datetime.now()
         self.save()
+        if self.workitem.all_done:
+            self.workitem.done = True
+            self.workitem.save()
 
     def remove_markdone(self):
+        self.workitem.done = False
+        self.workitem.save()
         self.done = True
         self.done_at = datetime.now()
         self.save()

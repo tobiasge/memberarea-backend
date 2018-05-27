@@ -16,7 +16,10 @@ class WorkitemViewSet(viewsets.ModelViewSet):
     """
 
     mine:
-    Load a list of workitems that are assigned to the current user
+    Load a list of workitems that are assigned to the current user and not done
+
+    published:
+    Load a list of workitems that are published user and not done
 
     assign:
     Manage user assignment for a workitem
@@ -34,9 +37,21 @@ class WorkitemViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def mine(self, request):
-        qs_mine = self.queryset.filter(assigned_to=request.user)
+        qs_mine = self.queryset.filter(assigned_to=request.user).filter(done=False)
         serializer_context = {'request': request}
         page = self.paginate_queryset(qs_mine)
+        serializer = self.serializer_class(
+            page,
+            context=serializer_context,
+            many=True
+        )
+        return self.get_paginated_response(serializer.data)
+
+    @action(detail=False)
+    def published(self, request):
+        qs_published = self.queryset.filter(published=True).filter(done=False)
+        serializer_context = {'request': request}
+        page = self.paginate_queryset(qs_published)
         serializer = self.serializer_class(
             page,
             context=serializer_context,
@@ -79,6 +94,11 @@ class WorkitemViewSet(viewsets.ModelViewSet):
 
 
 class WorkitemAssignmentViewSet(viewsets.ModelViewSet):
+    """
+
+    unverified:
+    Load a list of workitems assignments that have not been verified
+    """
     queryset = WorkitemAssignment.objects.all()
     serializer_class = WorkitemAssignmentSerializer
     renderer_classes = (WorkitemAssignmentJSONRenderer, )
@@ -103,3 +123,15 @@ class WorkitemAssignmentViewSet(viewsets.ModelViewSet):
             wa.remove_markdone()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=False)
+    def unverified(self, request):
+        qs_unverified = self.queryset.filter(verified=False)
+        serializer_context = {'request': request}
+        page = self.paginate_queryset(qs_unverified)
+        serializer = self.serializer_class(
+            page,
+            context=serializer_context,
+            many=True
+        )
+        return self.get_paginated_response(serializer.data)
