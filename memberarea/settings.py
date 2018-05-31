@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'memberarea.apps.authentication',
     'memberarea.apps.tags',
     'memberarea.apps.workitems',
+    'memberarea.apps.clubhouse',
 ]
 
 MIDDLEWARE = [

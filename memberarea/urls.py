@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users', include('memberarea.apps.authentication.urls')),
     path('api/tags', include('memberarea.apps.tags.urls')),
-    path('api/', include('memberarea.apps.workitems.urls')),
+    path('api/wi/', include('memberarea.apps.workitems.urls')),
+    path('api/ch/', include('memberarea.apps.clubhouse.urls')),
     url(r'^docs/', include_docs_urls(title='Memberarea API')),
 ]
