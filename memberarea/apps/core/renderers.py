@@ -30,8 +30,12 @@ class MemberareaJSONRenderer(JSONRenderer):
         elif data.get('error', None) is not None:
             error = data.get('error')
             # Prevent nested error fields
-            if error.get('error', None) is not None:
-                return super(MemberareaJSONRenderer, self).render(data.get('error'))
+            try:
+                if error.get('error', None) is not None:
+                    return super(MemberareaJSONRenderer, self).render(data.get('error'))
+            except AttributeError:
+                pass
+
             return super(MemberareaJSONRenderer, self).render(data)
         else:
             if self.object_label is None:

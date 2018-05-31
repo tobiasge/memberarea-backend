@@ -59,10 +59,7 @@ class Workitem(TimestampedModel):
 
     @property
     def all_done(self) -> bool:
-        for wa in self.assigned_to.all():
-            if wa.done is None:
-                return False
-        return True
+        return not self.assigned_to.all().filter(done=False).exists()
 
     def has_object_tag_permission(self, request):
         return request.user.has_perm('tag_workitem') or request.user == self.created_by
